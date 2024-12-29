@@ -15,9 +15,9 @@ Ce document retrace l'exploitation de la machine **FunBOX** dans le cadre du cou
 La cible a été identifiée à l'adresse IP `192.168.228.133`
 
 ### 1.2 Scan des ports ouverts
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/nmap.jpg" alt="nmap">
-</div>
+</p>
 
 Le scan Nmap a révélé plusieurs ports ouverts, dont :
 - **SSH** sur le port **22** (OpenSSH 7.2p2)
@@ -35,17 +35,17 @@ Le scan Nmap a révélé plusieurs ports ouverts, dont :
 
 En accédant au site web sur le port 80, on découvre qu'il n'y a pas de page d'accueil. On le remarque aussi à cause du retour du script `http-enum` de Nmap.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/juste-page-par-default.jpg" alt="default">
-</div>
+</p>
 
 Cela signifie que le site est vide. J'ai passé un peu de temps à tourner en rond. C'est donc à ce moment-là que j'ai décidé de me concentrer sur le service SSH (cf 2.2) et de revenir sur le service HTTP plus tard.
 
 En retournant sur vulnHUB pour relire la description de la machine, j'ai vu que le créateur de la machine avait laissé deux indices.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/hints.jpg" alt="vulnhub">
-</div>
+</p>
 
 Finalement, j'ai compris que :
 
@@ -53,85 +53,85 @@ Finalement, j'ai compris que :
 - Le user est accessible au bout de 15 minutes, ce qui était probablement un indice sur un bruteforce.
 
 J'ai donc d'abord essayé l'outil `nikto` en le lançant sur l'adresse IP de la machine. 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/nikto.jpg" alt="nikto">
-</div>
+</p>
 
 Évidemment, l'outil n'a rien trouvé. Mais en raisonnant avec des amis, on a compris que des chemins du serveur web pouvaient être en majuscule et que `nikto` ne les trouverait pas. On est donc partis sur un bruteforce de répertoires avec `dirb`, qui lui pourrait trouver des répertoires en majuscules et en minuscules.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/dir-search-min.jpg" alt="dirb">
-</div>
+</p>
 
 dirb, par défaut, ne fait pas la recherche de répertoires en majuscules. J'ai donc relancé la recherche avec l'option `-U` pour inclure les répertoires en majuscules.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/dirb-search-maj.jpg" alt="dirb">
-</div>
+</p>
 
 Et là, bingo, on trouve un `ROBOTS.TXT`
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/robot-1.jpg" alt="robots">
-</div>
+</p>
 
 On tombe sur `upload/` mais cette page est forbidden. 
 
 En regardant le code source de la page, on voit qu'il y a un autre répertoire caché tout en bas de la page.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/robot-2.jpg" alt="robots">
-</div>
+</p>
 
 On se rend donc sur ce répertoire pour se retrouver encore sur un forbidden. 
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/forbiden.jpg" alt="forbidden">
-</div>
+</p>
 
 On va donc essayer de bruteforcer les répertoires de ce répertoire avec `dirb` pour voir si on trouve quelque chose.
 
 En minuscule :
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/hiden-upload.jpg" alt="hidden">
-</div>
+</p>
 
 En majuscule :
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/rien-en-maj.jpg" alt="hidden">
-</div>
+</p>
 
 On a donc trouvé un répertoire `upload` qui est accessible. On va donc essayer de voir ce qu'on y trouve.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/upload-page.png" alt="upload">
-</div>
+</p>
 
 On va y uploader un fichier php pour voir si on peut avoir accès à l'exécution de code et donc à un shell.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/payload-uploaded.png" alt="upload">
-</div>
+</p>
 
 On obtient bien un shell quand on va sur le fichier uploadé.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/reverse-shell.jpg" alt="shell">
-</div>
+</p>
 
 Grâce à l'attaque sur le service SSH (pardon pour le spoil), on sait qu'il y a un utilisateur `thomas` sur la machine. J'ai donc dans un premier temps cherché à voir si je pouvais trouver des informations sur cet utilisateur dans le répertoire `/home/thomas`.
 
 J'y ai retrouvé un fichier `.todo` qui contient des informations.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/fichier-todo.jpg" alt="todo">
-</div>
+</p>
 
 En cherchant un peu plus, j'ai trouvé un fichier `hint.txt` à la racine.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/hint-txt.jpg" alt="hint">
-</div>
+</p>
 
 Commençons par le fichier `hint.txt` qui nous donne des indices. Déjà il nous fait une métaphore de l'OS avec la barbe de Gandalf, ce qui nous laisse penser que l'OS est vieux et possiblement vulnérable. Ensuite la phrase `Now , rockyout.txt isn't your friend, Its a little sed harder :-)`
 
@@ -147,23 +147,23 @@ Ensuite, on a des textes encodés :
 
 Au final, les deux premiers sont des fausses pistes. Le troisième nous dit d'aller les `todos`, faisant référence au fichier `.todo` que nous avons trouvé dans le répertoire `/home/thomas`.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/base32-hint.jpg" alt="base32">
-</div>
+</p>
 
 Avant de me concentrer sur cette histoire de `sed` et de `rockyou.txt`, j'ai lancé un `linpeas.sh` pour voir ce qu'il pouvait trouver.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/lenpeas.jpg" alt="linpeas">
-</div>
+</p>
 
 Il nous retourne pas mal d'informations, mais rien de bien intéressant (ou alors je n'ai pas su les exploiter).
 
 Mais on sait que l'OS est vieux et linpeas nous propose des exploits pour notre OS avec des statistiques de réussite.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/exploit.jpg" alt="linpeas">
-</div>
+</p>
 
 Mais avant de me lancer dans l'exploitation de des exploits , je vais me concentrer sur cette histoire de `rockyou.txt`, de `sed` et de `! à ajouter au mot de passe`.<br>
 Peut-être qu'on peut escalader les privilèges avec `thomas`.
@@ -176,64 +176,64 @@ sed 's/$/!/' rockyou.txt > rockyou2.txt
 
 On va ensuite utiliser `hydra` pour faire un bruteforce sur le service SSH avec le fichier `rockyou2.txt` et l'utilisateur `thomas`.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/FOUND-PASSWORD.jpg" alt="hydra-found">
-</div>
+</p>
 
 On a donc trouvé le mot de passe de l'utilisateur `thomas`, qui est `thebest!`.
 
 On va donc se connecter en SSH avec cet utilisateur.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/connecte.jpg" alt="ssh">
-</div>
+</p>
 
 On va voir les droits sudo de l'utilisateur avec la commande `sudo -l`.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/pas-de-droit-sudo.jpg" alt="sudo">
-</div>
+</p>
 
 Dommage, Thomas n'a pas de droit sudo. On va donc devoir rester sur notre idée de base de faire un exploit sur l'OS.
 
 En reregardant les exploits proposés par `linpeas`, on voit qu'il y a un exploit pour `dirtycow`. Grâce aux liens donnés, on va retrouver le code de l'exploit. On aura juste à le copier-coller dans un fichier et à le compiler.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/exploit-dirty-cow.jpg" alt="dirtycow">
-</div>
+</p>
 
 Pour compiler, il nous faut gcc. Donc au cas où, on va regarder et prier que gcc soit installé sur la machine.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/found-gcc.jpg" alt="gcc">
-</div>
+</p>
 
 C'est assez intéressant, car en mettant en commun avec mes amis, on a vu que pour certains, ils ne pouvaient avoir accès à gcc (en réinstallant la machine après, j'ai remarqué que je n'avais plus gcc non plus).
 
 Mais pour l'instant on a gcc, on va donc s'en servir pour compiler l'exploit.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/owned.jpg" alt="gcc">
-</div>
+</p>
 
 Et voilà, on a un accès root sur la machine... Du moins pendant 30 secondes, car la machine kernel panic ensuite.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/kernelpanic.jpg" alt="kernel-panic">
-</div>
+</p>
 
 Je reboot la machine et retente l'exploit, et rebelote. Cependant, après 5 essais, j'ai eu le temps de chercher un peu plus sur la machine et j'ai trouvé un fichier `flag.txt` dans le répertoire `/root`.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/flag.jpg" alt="flag">
-</div>
+</p>
 
 Après avoir mis en commun avec mes amis, je leur ai expliqué comment j'ai fait fonctionner dirtycow et ils ont pu le reproduire, mais eux pas de kernel panic, ils ont pu garder l'accès root... étrange.
 
 Apparemment ce n'est pas grave, j'ai quand même réussi.
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/KP-pas-grave.png" alt="pas-grave">
-</div>
+</p>
 
 Je suis root (30 secondes), donc je suis content.
 
@@ -247,9 +247,9 @@ Connaissant la version du service SSH, j'ai cherché des exploits et j'ai vu qu'
 
 J'ai donc utilisé un exploit de metasploit.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/user-found.jpg" alt="metasploit">
-</div>
+</p>
 
 Alors c'est très drôle, parce que j'avais fait un mauvais copier-coller, ce qui fait que j'ai utilisé le fichier `unix_passwords.txt` comme wordlist pour le bruteforce des utilisateurs, et c'est comme ça que j'ai trouvé l'utilisateur `thomas` sans aucun faux positif.
 
@@ -259,9 +259,9 @@ Mais bon, à ce moment-là, je ne connaissais que l'utilisateur `thomas`.
 
 J'ai donc essayé de bruteforcer le mot de passe de l'utilisateur `thomas` avec `hydra` et la wordlist `rockyou.txt`. (Évidemment, je n'avais pas encore connaissance du fichier `hint.txt`)
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./images/tentative-brute-force.jpg" alt="hydra">
-</div>
+</p>
 
 Sans succès. Après 20 minutes, j'ai abandonné et je suis retourné sur le service HTTP.
 
