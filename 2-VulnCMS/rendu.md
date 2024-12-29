@@ -10,7 +10,7 @@ Ce document retrace l'exploitation de la machine **VulnCMS**. Cette machine virt
 
 ### 1.1 Découverte de la machine
 
-La première étape a consisté à identifier l’adresse IP de la machine cible. Un scan réseau a révélé l’IP **192.168.228.167**, qui servira de base pour les étapes suivantes.
+La première étape a consisté à identifier l’adresse IP de la machine cible. Un scan réseau a révélé l’IP **192.168.228.167**.
 
 <p align="center">
     <img src="./images/netdiscover.png" alt="Découverte de la machine avec netdiscover">
@@ -142,7 +142,9 @@ Dès qu'on a un accès utilisateur, on cherche à obtenir un accès root. Pour c
 ---
 
 
-Le site Joomla, accessible sur le port **8001**, utilisait la version `3.4.3`. Un scan avec `joomscan` a confirmé une vulnérabilité à une injection SQL.
+Le site Joomla, accessible sur le port **8001**, utilisait la version `3.4.3`. 
+
+Un scan avec `joomscan` a confirmé une vulnérabilité à une injection SQL.
 
 <p align="center">
     <img src="./images/joomla/joomscan.png" alt="Scan de Joomla avec joomscan">
@@ -163,7 +165,13 @@ L’attaque a été menée avec `sqlmap` pour exploiter cette faille.
     <img src="./images/joomla/sqlmap-found-db.png" alt="Informations obtenues">
 </p>
 
-Dans ce dump, on a pu trouver un mot de passe hashé pour l'utilisateur `elliot`. J'ai remarqué que le champ `mail` contenait probablement un indice. Après analyse, j'ai essayé le mot de passe `5te!_M0un71@N`, et cela a fonctionné.
+<p align="center">
+    <img src="./images/joomla/eliotPasswd.png" alt="Mot de passe trouvé">
+</p>
+
+
+Dans ce dump, on a pu trouver des informations sur l'utilisateur `elliot`. Déjà, on a son mot de passe hashé, mais on a aussi son adresse mail, vu que celle-ci ne ressemble pas à une adresse mail classique je me suis dit que c'était un indice. Après déchiffrage, j'ai reconnu que `5te!_M0un71@N` était `Steel Mountain`, un lieu important dans la série `Mr. Robot`. C'était trop évident pour être ignoré.
+J'ai donc essayé ce mot de passe pour me connecter en tant qu'elliot.
 
 <p align="center">
     <img src="./images/joomla/connected-elliot.png" alt="Connexion en tant qu’elliot">
@@ -189,6 +197,8 @@ Drupal, sur le port **9001**, a été exploité avec l’exploit `drupal_drupalg
 <p align="center">
     <img src="./images/drupal/exploited.png" alt="Accès obtenu avec l’exploit Drupal">
 </p>
+Même technique que pour les autres CMS pour obtenir un accès root.
+
 
 ---
 
