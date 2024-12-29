@@ -1,0 +1,29 @@
+PORT    STATE SERVICE VERSION
+22/tcp  open  ssh     OpenSSH 7.2p2 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+80/tcp  open  http    Apache httpd 2.4.18 ((Ubuntu))
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+110/tcp open  pop3    Dovecot pop3d
+143/tcp open  imap    Dovecot imapd
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+
+
+# juste un serveur web rien derriere
+
+# On a rien sur cette vm 
+
+
+#SSH enum ?
+[+] 192.168.228.133:22 - SSH - User 'thomas' found
+
+la blague j'ai utiliser la bon word list,
+j'ai utiliser password au lieu de user, mais avec le file users j'ai pas thomas mais avec le file password j'ai thomas donc on dirait que la chance me souri
+
+
+
+rockyou on ajoute un ! devant tous
+sed 's/$/!/' rockyou.txt > rockyou2.txt
+
+
+
+gcc-5 dirtyroot.c -o dirtyroot -pthread

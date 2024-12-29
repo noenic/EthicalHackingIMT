@@ -1,0 +1,53 @@
+j'ai commencé par un netdiscover
+
+puis le nmap classique avec http enum 
+
+sauf qu'il y avait une petite subtilité que 'javai spas au debut,
+c'est qu'il ne cherche que des chemin en minisucule et pas en majucule 
+j'ai tester en suite avec nikto mais sans succes non plus 
+
+
+j'ai essayé une ssh enumeration et j'ai touvé le user thomas (un peu a la chance  unix-user)
+
+je me suis repencher sur le http et grace a un de mes amis j'ai entenud parler de dirsearch qui lui propose une option pour 
+les chemins en majuscule
+
+C'est la que j'ai trouver ROBOT.txt qui au premier abor renvois un simple chemin
+a cause du scaling de mon ecran j'avais pas vu le chemin caché tout en bas de la page 
+
+
+en refaisant un dirseqrch sur ce chemin j'ai trouvé un truc pour upload un fichier, du coup j'y ai uploader un reverse shell
+
+j'ai donc pu lancé linpeas et trouver ccertain fichier de note (indice)
+
+j'ai trouver le fichier todo de thomas avant le fichier indice a la racine , simplement parce que j'ai regarder diretcement le 
+dir thoams connaisant son existance au paravenant
+
+Vous nous aviez dit de ne pas nous occuper des service mail, donc son indice "check my mail" ne m'a pas aidé
+mais il parlait de son mot de passe, comme quoi il devait ajoouter un "!" a son mot de passe
+
+par contre apres j'ai trouvé le fichier hint.txt dans lequel la phrase " rockyou.txt isn't your firend its a little sed harder"
+
+heureusement qu'il y avait le mot "sed" c'est l'outi pour faire des recherche et remplacement de texte
+apres avoir tourner sur cette phrase pendant quelque vintaine de minute avec un ami on c'est dit qu'il fallait probablement 
+utiliser 'rockyou.txt' mais du coup si il avait deja fait ce qu'ild evait faire dans le todo
+il a ajouter un "!" a son mot de passe, dans les hint de la machine ils disent qu'on trouvele mot de passe en 15 minutes
+ce qui indique qu'il va fallori brute force
+
+donc avec sed on a ajouter le "!" a chaque ligne de rockyou.txt et on a lancer un hydra sur le service ssh avec le user thomas
+et le mot de passe trouvé :"thebest!"
+
+La version de ubuntu etait assez vielle donc elle etait ouvert a la faille dirty cow, 
+trouvé gracea linpeas, j'ai regarde un tuto en ligne sur comment l'exploiter
+y a eu un truc bizzare avec GCC, certain de mes amis l'on pas touvé, moi avec whereis j'ai trouvé direct 
+et j'ai pu compiler l'exploit et ca avait marché, j'etais root sur la machine.
+
+donc enfiate j'avais meme pas besoin de brute force le mot de passe de thomas, j'aurais pu directement exploiter dirty cow
+avec www-data, (remarque avec chmod +x)
+
+et voila j'ai eu le flag
+
+remarque interessant sur ma VM : une fois que j'avais exploit le truc la machine faisait un kernel panic, probablement 
+parce qu'il reecriver le fichier passwd mais même en suivant les inscrution de l'exploit j'arrivais pas a la garder stable
+j'ai eguiller mon amis dan sla meme direction que moi, et une fois qu'il a fait l'exploit lui la machien ne planté pas
+probablement un truc avec vmware

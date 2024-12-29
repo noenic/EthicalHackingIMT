@@ -1,0 +1,15 @@
+The OS beard ist whiter and longer as Gandalfs one !
+Perhaps, its possible to get root from here.
+I doesnt look forward to see this in the writeups/walktroughs,
+but this is murpys law !
+
+Now, rockyou.txt isnt your friend. Its a little sed harder :-)
+
+If you need more brainfuck: Take this:
+++++++++++[>+>+++>+++++++>++++++++++<<<<-]>>>++++++++++++++.>++++.---.<<++.>>+++++++++.---------.+++++++++++++++++++.----.<<.>>------------.+.+++++.++++++.<<.>>-----------.++++++++++.<<.>>-------.+++.------------.--.+++++++++++++++++++.---------------.-.<<.>>+++++.+++++.<<++++++++++++++++++++++++++.
+
+Bit more ?
+Tm8gaGludHMgaGVyZSAhCg== (No hints here !)
+
+Not enough ?
+KNSWC4TDNAQGM33SEB2G6ZDPOMXA==== ()
