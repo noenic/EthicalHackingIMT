@@ -49,7 +49,7 @@ En retournant sur vulnHUB pour relire la description de la machine, j'ai vu que 
 
 Finalement, j'ai compris que :
 
-- `nikto` était un outil de scan de vulnérabilités web (visiblement sensible à la casse) que je n'utilisais pas de toute façon.
+- `nikto` était un outil de scan de vulnérabilités web (visiblement sensible à la casse).
 - Le user est accessible au bout de 15 minutes, ce qui était probablement un indice sur un bruteforce.
 
 J'ai donc d'abord essayé l'outil `nikto` en le lançant sur l'adresse IP de la machine. 
@@ -135,7 +135,7 @@ En cherchant un peu plus, j'ai trouvé un fichier `hint.txt` à la racine.
 
 Commençons par le fichier `hint.txt` qui nous donne des indices. Déjà il nous fait une métaphore de l'OS avec la barbe de Gandalf, ce qui nous laisse penser que l'OS est vieux et possiblement vulnérable. Ensuite la phrase `Now , rockyout.txt isn't your friend, Its a little sed harder :-)`
 
-On sait déjà que le fichier `rockyou.txt` est un fichier de wordlist pour des attaques par bruteforce. 
+Le fichier `rockyou.txt` est bien connu comme une wordlist utilisée pour des attaques par brute force. Lors de mes essais avec SSH, j'ai testé cette wordlist, mais sans succès.
 
 Dit comme ça la phrase ne veut pas dire grand-chose, mais la mention du mot `sed` nous laisse penser que le fichier `rockyou.txt` doit être modifié avec `sed` pour être utilisé.
 
@@ -145,7 +145,7 @@ Ensuite, on a des textes encodés :
 - Le deuxième est en base64, le `==` le laisse penser.
 - Le troisième est en base32. 
 
-Au final, les deux premiers sont des fausses pistes. Le troisième nous dit d'aller les `todos`, faisant référence au fichier `.todo` que nous avons trouvé dans le répertoire `/home/thomas`.
+Au final, les deux premiers sont des fausses pistes. Le troisième nous dit d'aller voir les `todos`, faisant référence au fichier `.todo` que nous avons trouvé dans le répertoire `/home/thomas`.
 
 <p align="center">
   <img src="./images/base32-hint.jpg" alt="base32">
@@ -271,5 +271,5 @@ Sans succès. Après 20 minutes, j'ai abandonné et je suis retourné sur le ser
 
 Cette machine était très intéressante, car c'est la première fois qu'on fait un exploit sur l'OS directement. Généralement, on exploite des services ou des configurations mal sécurisées, mais là, on a exploité une faille dans le système d'exploitation lui-même. Rien que pour ça, cette machine est ma préférée.
 
-On peut quand même lui reprocher que la partie HTTP était un peu ennuyante. On se retrouve encore dans un espèce de jeu de piste pour trouver des répertoires cachés, pour au final uploader un fichier php pour
+On peut quand même lui reprocher que la partie HTTP était un peu ennuyante. On se retrouve encore dans un espèce de jeu de piste pour trouver des répertoires cachés, pour au final uploader un fichier php.
 
