@@ -56,9 +56,9 @@ On a aussi une page admin qui nous demande des identifiants.
 Mais ayant fait le TD sur sqlmap juste avant, j'ai directement essayé de lancer une injection SQL sur le paramètre `id` de l'url.
 
 <p align="center">
-  <img src="images/tentative-sql-1.jpg
-" alt="tentative-sql-1">
+  <img src="images/tentative-sql-1.jpg" alt="tentative-sql-1">
 </p>
+
 <p align="center">
   <img src="images/SQLMAP-REUSSIS.jpg" alt="SQLMAP-REUSSIS">
 </p>
