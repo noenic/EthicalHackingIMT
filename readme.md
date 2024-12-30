@@ -34,6 +34,7 @@
 
 - Ces rapports ne couvrent pas nécessairement toutes les actions entreprises durant les activités. Seules celles jugées pertinentes et nécessaires pour faire progresser le rapport y sont consignées. 
 
-- Les rendus des travaux dirigés (TD) servent principalement à attester de leur complétion. Les détails plus approfondis sont généralement développés dans les travaux pratiques (TP).  
+- Les rendus des travaux dirigés (TD), qui sont réalisés sur TryHackMe, servent principalement à attester de leur complétion. Les informations proviennent généralement de la lecture de la documentation des outils, via des commandes comme `man` ou `grep`. Lorsqu'une partie pratique était incluse, des captures d'écran de mes actions ont été ajoutées pour illustrer le processus.  
+
 
 - Parmi les dossiers des travaux pratiques, il est possible de retrouver des fichiers tels que des scripts, des configurations, ou d'autres éléments utilisés pour la réalisation des activités.  
