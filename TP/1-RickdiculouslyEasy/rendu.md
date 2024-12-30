@@ -1,9 +1,17 @@
 
-Nicolas Dargazanli - FIA1 - TP1
-==============================
+# Rendu sur la machine RickdiculouslyEasy
 
-Rick and Morty CTF: RickdiculouslyEasy
-======================================
+## Introduction
+
+Ce document détaille l'exploitation de la machine **RickdiculouslyEasy**. En tant que première machine de ce module, elle a pour objectif de nous initier aux CTFs et aux différentes étapes nécessaires pour exploiter une machine.  
+
+Toutes les observations, ainsi que les commandes exécutées, seront présentées sous forme de blocs de code dans ce document. Cela est dû à l'impossibilité de réaliser des captures d'écran au moment de cette activité.  
+
+Selon l'enseignant, cette machine est davantage un tutoriel qu'un travail sérieux, bien que nous ayons réussi à trouver le flag bonus. Ainsi, l'absence d'illustrations dans ce rendu n'est pas particulièrement problématique.  
+
+Les prochains rendus, quant à eux, comporteront pour la plupart des illustrations afin de mieux documenter les démarches et observations.  
+
+---
 
 
 
@@ -51,8 +59,9 @@ L'utilisation de `-p-` permet de scanner tous les ports et pas seulement les por
 
 
 # Déroulement du CTF
+---
 
-## Premier Flag - FTP anonyme (port 21)
+### Premier Flag - FTP anonyme (port 21)
     
 On remarque que le port 21 est ouvert, généralement, c'est le port du service FTP. On va essayer de se connecter en anonyme pour voir si on peut accéder à des fichiers.
 
@@ -84,7 +93,9 @@ FLAG{Whoa this is unexpected} - 10 Points
 ```
 `FLAG{Whoa this is unexpected} - 10 Points`
 
-## Fausse piste - ssh (port 22)
+---
+
+### Fausse piste - ssh (port 22)
 
 On trouve un service SSH sur le port 22, on va essayer de se connecter avec les identifiants par défaut.
 
@@ -104,8 +115,11 @@ On reçoit une réponse qui nous indique que c'est pas vraiment un service SSH. 
 Peut-être pour nous induire en erreur sur le système d'exploitation de la machine ?
 
 
+---
 
-## Deuxième Flag - zeus-admin (port 9090)
+
+
+### Deuxième Flag - zeus-admin (port 9090)
 
 On va essayer de se connecter au service zeus-admin sur le port 9090.
 
@@ -114,7 +128,10 @@ On retrouve une interface web, sur laquelle on retrouve le flag
 `FLAG {There is no Zeus, in your face!} - 10 Points`
 
 
-## Troisième Flag - Connexion au port 13337
+---
+
+
+### Troisième Flag - Connexion au port 13337
 
 On va essayer de se connecter au port 13337 pour voir ce qu'il y a derrière.
 
@@ -124,7 +141,10 @@ FLAG:{TheyFoundMyBackDoorMorty}-10Points
 ```
 `FLAG:{TheyFoundMyBackDoorMorty}-10Points`
 
-## Quatrième Flag - Reverse Shell (port 60000)
+---
+
+
+### Quatrième Flag - Reverse Shell (port 60000)
 
 On retrouve un service sur le port 60000, on va essayer de se connecter avec netcat pour voir ce qu'il y a derrière.
 
@@ -154,7 +174,10 @@ On y retrouve un reverse shell, avec un flag `FLAG{Flip the pickle Morty!} - 10 
 Aucune autre commande n'est disponible, on ne peut pas naviguer dans les dossiers ou créer des fichiers.
 
 
-## Découverte Interessante - Service SSH (port 22222)
+---
+
+
+### Découverte Interessante - Service SSH (port 22222)
 
 Le port 22222 est ouvert, on va essayer de se connecter avec netcat pour voir ce qu'il y a derrière.
 
@@ -179,8 +202,11 @@ On dirait que c'est bien un service SSH, on a pas encore les identifiants pour s
 
 
 
+---
 
-## Cinquième Flag - Page web (port 80)
+
+
+### Cinquième Flag - Page web (port 80)
 
 On se retrouve sur une page html, on peut essayer de trouver les chemins cachés avec nmap.
 
@@ -318,8 +344,11 @@ apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
 On a trouvé les utilisateurs de la machine, certains sont intéressants, par exemple `RickSanchez`, `Morty` et bien sur la sœur de Morty `Summer`.
 
 
+---
 
-## Sixième  Flag - SSH avec l'utilisateur Summer
+
+
+### Sixième  Flag - SSH avec l'utilisateur Summer
 
 Lors du dernier flag, on a trouvé un mot de passe `winter` et un utilisateur `Summer`, on peut essayer de se connecter en SSH avec ces identifiants.
 
@@ -335,7 +364,10 @@ FLAG{Get off the high road Summer!} - 10 Points
 ```
 Dans le répertoire de `Summer`, on retrouve un flag `FLAG{Get off the high road Summer!} - 10 Points`.
 
-## Septième Flag - Fichiers dans le répertoire de Morty
+---
+
+
+### Septième Flag - Fichiers dans le répertoire de Morty
 
 Maintenant, qu'on est connecté en SSH avec l'utilisateur `Summer`, on peut essayer de naviguer dans le système pour trouver des fichiers intéressants.
 Notamment dans le répertoire de `Morty`.
@@ -379,7 +411,10 @@ Mais le message est intéressant, on peut supposer qu'il y a un coffre-fort quel
 De plus, comparé aux autres flags, celui-ci est une suite de chiffres, et non une citation de la série, on peut supposer qu'il est plus important que les autres.
 
 
-## Huitième Flag - Coffre fort de Rick
+---
+
+
+### Huitième Flag - Coffre fort de Rick
 
 On continuant de naviguer dans le système, on arrive dans le répertoire de `RickSanchez`.
     
@@ -447,8 +482,11 @@ One of the words in my old bands name.� @
 On a trouvé un autre flag `FLAG{And Awwwaaaaayyyy we Go!} - 20 Points` et un message de Rick.
 
 
+---
 
-## Neuvième Flag - Accès Root
+
+
+### Neuvième Flag - Accès Root
 
 La sortie du programme `./safe` nous donne des indices sur son mot de passe.
 Les critères sont simples : 1 caractère en majuscule, 1 chiffre et un mot de l'ancien nom de son groupe de musique.
@@ -517,6 +555,9 @@ FLAG: {Ionic Defibrillator} - 30 points
 On a trouvé le dernier flag `FLAG: {Ionic Defibrillator} - 30 points` et on a fini le CTF. 
 
 
+---
+
+
 
 # FLAGS
 Num| Flag | Points | Origine | Description |
@@ -533,8 +574,11 @@ Num| Flag | Points | Origine | Description |
 
 Total: `130` Points
 
+---
+
+
 # Remarques de fin
-## 1
+## Nmap
 J'ai réalisé un peu tard l'importance de l'option nmap `-sV` pour scanner directement les services. Heureusement, je n'ai pas perdu trop de temps à le faire manuellement avec netcat, mais nmap propose cette fonctionnalité directement.
 ```bash
 $ nmap 192.168.228.161 -p21,22,80,9090,13337,22222,60000 -sV
@@ -550,7 +594,8 @@ PORT      STATE SERVICE    VERSION
 Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-## 2
+## Texte dans les images
+
 Pour l'image `Safe_Password.jpg`, j'ai commencé par utiliser la commande `strings` pour extraire des informations textuelles et, bien que le mot de passe y figurait, je ne l'avais simplement pas remarqué. J'ai ensuite utilisé le site aperisolve, ce qui n'était pas vraiment nécessaire, mais intéressant pour l'avenir, car ce site permet aussi d'analyser les images pour détecter du texte caché par stéganographie.
 
 
