@@ -11,17 +11,17 @@
 |----|-----|-------|
 | 1  | Nmap | [TD/1-Nmap/rendu.md](TD/1-Nmap/rendu.md) |
 | 2  | Burp Suite | [TD/2-Burp/rendu.md](TD/2-Burp/rendu.md) |
-| 3  | SQLMap | [TD/3-SQLMap/rendu.md](TD/3-SQLMap/rendu.md) |
-| 4  | Metasploit | [TD/4-Metasploit/rendu.md](TD/4-Metasploit/rendu.md) |
+| 3  | SQLMap | [TD/3-SQLMap/rendu.md](TD/3-SQLMAP/rendu.md) |
+| 4  | Metasploit | [TD/4-Metasploit/rendu.md](TD/4-metasploit/rendu.md) |
 
 ### Travaux Pratiques
 | TP | Nom | Rendu | Target | Tags |
 |----|-----|-------| ---- | ---- |
 | 1  | RickdiculouslyEasy | [TP/1-RickdiculouslyEasy/rendu.md](TP/1-RickdiculouslyEasy/rendu.md) | Trouver les 9 flags | NA |
-| 2  | vulnCMS | [TP/2-vulnCMS/rendu.md](TP/2-vulnCMS/rendu.md) | Obtenir accès root | Reconnaissance, exploit, privilege escalation |
+| 2  | vulnCMS | [TP/2-vulnCMS/rendu.md](TP/2-VulnCMS/rendu.md) | Obtenir accès root | Reconnaissance, exploit, privilege escalation |
 | 3  | Basic Pentesting | [TP/3-BasicPentesting/rendu.md](TP/3-BasicPentesting/rendu.md) | Obtenir accès root | Reconnaissance, brute force, exploit, web, privilege escalation |
 | 4  | SQLinject To Shell | [TP/4-SQLinject_to_shell/rendu.md](TP/4-SQLinject_to_shell/rendu.md) | Obtenir accès | Reconnaissance, SQLi, exploit |
-| 5  | Funbox | [TP/5-Funbox/rendu.md](TP/5-Funbox/rendu.md) | Obtenir accès root | Reconnaissance, brute force, exploit, web, privilege escalation |
+| 5  | Funbox | [TP/5-Funbox/rendu.md](TP/5-FunBox/rendu.md) | Obtenir accès root | Reconnaissance, brute force, exploit, web, privilege escalation |
 
 
 ### Remarques
