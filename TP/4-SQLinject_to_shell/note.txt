@@ -77,7 +77,3 @@ Table: categories
 | 3  | 2010   |
 +----+--------+
 
-
-
-
-# On sait grace a error-on-upload que le chemin est /var/www/
